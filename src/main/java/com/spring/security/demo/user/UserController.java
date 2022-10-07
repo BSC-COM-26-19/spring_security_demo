@@ -34,6 +34,7 @@ public class UserController {
 
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') and hasRole('ROLE_EXECUTIVE')")
     public ResponseEntity<PagedModel<?>> getAllUsers(@PositiveOrZero  @RequestParam(value="page", defaultValue = "0") int page,
                                                       @Positive @RequestParam(value="size", defaultValue = "20") int size,
                                                      PagedResourcesAssembler<User> pagedResourcesAssembler){
@@ -41,6 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
+
     public ResponseEntity<UserModel> getUserDetails(Authentication authentication){
         return userService.getUser(authentication);
     }
